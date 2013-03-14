@@ -1,15 +1,14 @@
-# put your source files here, make should handle the rest!
+# Put your stlink folder here so make burn will work.
+STLINK=~/stlink.git
+
 SRCS=main.c system_stm32f4xx.c stm32f4xx_it.c
+
+# Library modules
 SRCS += stm32f4xx_adc.c stm32f4xx_dma.c stm32f4xx_gpio.c stm32f4xx_rcc.c
 
 # all the files will be generated with this name (.elf, .bin, .hex, etc)
 PROJ_NAME=adc3_dma
 
-# Put your stlink folder here so make burn will work.
-STLINK=~/stlink.git
-
-
-# Normally you shouldn't need to change anything below this line...
 #######################################################################################
 
 STM_COMMON=../../..

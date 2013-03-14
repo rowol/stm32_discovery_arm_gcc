@@ -1,18 +1,15 @@
-# put your source files here, make should handle the rest!
-SRCS=main.c system_stm32f4xx.c stm32f4xx_it.c
-SRCS += stm32f4xx_dma.c stm32f4xx_exti.c stm32f4xx_gpio.c stm32f4xx_rcc.c misc.c
-SRCS += stm32f4xx_syscfg.c
-SRCS += stm32f4_discovery.c
-
-
-# all the files will be generated with this name (.elf, .bin, .hex, etc)
-PROJ_NAME=dma_flash_ram
-
 # Put your stlink folder here so make burn will work.
 STLINK=~/stlink.git
 
+SRCS=main.c system_stm32f4xx.c stm32f4xx_it.c
 
-# Normally you shouldn't need to change anything below this line...
+# Library modules
+SRCS += stm32f4xx_dma.c stm32f4xx_exti.c stm32f4xx_gpio.c stm32f4xx_rcc.c misc.c stm32f4xx_syscfg.c
+SRCS += stm32f4_discovery.c
+
+# Binaries will be generated with this name (.elf, .bin, .hex, etc)
+PROJ_NAME=dma_flash_ram
+
 #######################################################################################
 
 STM_COMMON=../../..

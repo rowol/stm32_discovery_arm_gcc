@@ -4,12 +4,11 @@ STLINK=~/stlink.git
 SRCS=main.c system_stm32f4xx.c stm32f4xx_it.c
 
 # Library modules
-SRCS += stm32f4xx_dac.c stm32f4xx_dma.c stm32f4xx_exti.c stm32f4xx_gpio.c stm32f4xx_rcc.c
-SRCS += stm32f4xx_syscfg.c stm32f4xx_tim.c misc.c
+SRCS += stm32f4xx_exti.c stm32f4xx_gpio.c stm32f4xx_rcc.c misc.c stm32f4xx_syscfg.c
 SRCS += stm32f4_discovery.c
 
 # Binaries will be generated with this name (.elf, .bin, .hex, etc)
-PROJ_NAME=dac_signals_generation
+PROJ_NAME=exti
 
 #######################################################################################
 

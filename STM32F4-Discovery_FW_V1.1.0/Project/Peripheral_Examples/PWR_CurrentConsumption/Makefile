@@ -1,15 +1,16 @@
+
 # Put your stlink folder here so make burn will work.
 STLINK=~/stlink.git
 
 SRCS=main.c system_stm32f4xx.c stm32f4xx_it.c
 
 # Library modules
-SRCS += stm32f4xx_dac.c stm32f4xx_dma.c stm32f4xx_exti.c stm32f4xx_gpio.c stm32f4xx_rcc.c
-SRCS += stm32f4xx_syscfg.c stm32f4xx_tim.c misc.c
-SRCS += stm32f4_discovery.c
+SRCS += stm32f4xx_exti.c stm32f4xx_gpio.c stm32f4xx_pwr.c stm32f4xx_rcc.c stm32f4xx_rtc.c
+SRCS += stm32f4xx_syscfg.c misc.c
+SRCS += stm32f4_discovery.c stm32f4xx_lp_modes.c
 
 # Binaries will be generated with this name (.elf, .bin, .hex, etc)
-PROJ_NAME=dac_signals_generation
+PROJ_NAME=pwr_current_consumption
 
 #######################################################################################
 

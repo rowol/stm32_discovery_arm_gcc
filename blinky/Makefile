@@ -1,17 +1,17 @@
-# put your source files here, make should handle the rest!
-SRCS=main.c system_stm32f4xx.c
-
-# all the files will be generated with this name (main.elf, main.bin, main.hex, etc)
-PROJ_NAME=main
 
 # Put your stlink folder here so make burn will work.
-STLINK=/home/rowol/stlink.git
+STLINK=~/stlink.git
+
+# Put your source files here (or *.c, etc)
+SRCS=main.c system_stm32f4xx.c
+
+# Binaries will be generated with this name (.elf, .bin, .hex, etc)
+PROJ_NAME=blinky
 
 # Put your STM32F4 library code directory here
 STM_COMMON=../STM32F4-Discovery_FW_V1.1.0
 
 # Normally you shouldn't need to change anything below this line!
-
 #######################################################################################
 
 CC=arm-none-eabi-gcc
@@ -27,7 +27,6 @@ CFLAGS += -I$(STM_COMMON)/Utilities/STM32F4-Discovery
 CFLAGS += -I$(STM_COMMON)/Libraries/CMSIS/Include -I$(STM_COMMON)/Libraries/CMSIS/ST/STM32F4xx/Include
 CFLAGS += -I$(STM_COMMON)/Libraries/STM32F4xx_StdPeriph_Driver/inc
 
-
 # add startup file to build
 SRCS += $(STM_COMMON)/Libraries/CMSIS/ST/STM32F4xx/Source/Templates/TrueSTUDIO/startup_stm32f4xx.s 
 OBJS = $(SRCS:.c=.o)
@@ -40,16 +39,12 @@ all: proj
 proj: $(PROJ_NAME).elf
 
 $(PROJ_NAME).elf: $(SRCS)
-	$(CC) $(CFLAGS) $^ -o $@ -L../STM32F4-Discovery_FW_V1.1.0/lib -lstm32f4
+	$(CC) $(CFLAGS) $^ -o $@ 
 	$(OBJCOPY) -O ihex $(PROJ_NAME).elf $(PROJ_NAME).hex
 	$(OBJCOPY) -O binary $(PROJ_NAME).elf $(PROJ_NAME).bin
 
 clean:
-	rm -f *.o
-	rm -f $(PROJ_NAME).elf
-	rm -f $(PROJ_NAME).hex
-	rm -f $(PROJ_NAME).bin
-
+	rm -f *.o $(PROJ_NAME).elf $(PROJ_NAME).hex $(PROJ_NAME).bin
 
 # Flash the STM32F4
 burn: proj

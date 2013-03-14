@@ -1,15 +1,15 @@
+
 # Put your stlink folder here so make burn will work.
 STLINK=~/stlink.git
 
 SRCS=main.c system_stm32f4xx.c stm32f4xx_it.c
 
 # Library modules
-SRCS += stm32f4xx_dac.c stm32f4xx_dma.c stm32f4xx_exti.c stm32f4xx_gpio.c stm32f4xx_rcc.c
-SRCS += stm32f4xx_syscfg.c stm32f4xx_tim.c misc.c
-SRCS += stm32f4_discovery.c
+SRCS += stm32f4xx_gpio.c stm32f4xx_rcc.c stm32f4xx_tim.c
+SRCS += misc.c
 
 # Binaries will be generated with this name (.elf, .bin, .hex, etc)
-PROJ_NAME=dac_signals_generation
+PROJ_NAME=tim_pwm_input
 
 #######################################################################################
 
@@ -36,7 +36,7 @@ SRCS += $(STM_COMMON)/Libraries/CMSIS/ST/STM32F4xx/Source/Templates/TrueSTUDIO/s
 
 OBJS = $(SRCS:.c=.o)
 
-vpath %.c $(STM_COMMON)/Libraries/STM32F4xx_StdPeriph_Driver/src $(STM_COMMON)/Utilities/STM32F4-Discovery
+vpath %.c $(STM_COMMON)/Libraries/STM32F4xx_StdPeriph_Driver/src 
 
 .PHONY: proj
 
