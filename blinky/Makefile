@@ -8,7 +8,7 @@ PROJ_NAME=main
 STLINK=/home/rowol/stlink.git
 
 # Put your STM32F4 library code directory here
-STM_COMMON=/home/rowol/stm32_discovery_arm_gcc.git/STM32F4-Discovery_FW_V1.1.0
+STM_COMMON=../STM32F4-Discovery_FW_V1.1.0
 
 # Normally you shouldn't need to change anything below this line!
 
@@ -24,12 +24,12 @@ CFLAGS += -I.
 
 # Include files from STM libraries
 CFLAGS += -I$(STM_COMMON)/Utilities/STM32F4-Discovery
-CFLAGS += -I$(STM_COMMON)/src/CMSIS/Include -I$(STM_COMMON)/src/CMSIS/ST/STM32F4xx/Include
-CFLAGS += -I$(STM_COMMON)/src/STM32F4xx_StdPeriph_Driver/inc
+CFLAGS += -I$(STM_COMMON)/Libraries/CMSIS/Include -I$(STM_COMMON)/Libraries/CMSIS/ST/STM32F4xx/Include
+CFLAGS += -I$(STM_COMMON)/Libraries/STM32F4xx_StdPeriph_Driver/inc
 
 
 # add startup file to build
-SRCS += $(STM_COMMON)/src/CMSIS/ST/STM32F4xx/Source/Templates/TrueSTUDIO/startup_stm32f4xx.s 
+SRCS += $(STM_COMMON)/Libraries/CMSIS/ST/STM32F4xx/Source/Templates/TrueSTUDIO/startup_stm32f4xx.s 
 OBJS = $(SRCS:.c=.o)
 
 
