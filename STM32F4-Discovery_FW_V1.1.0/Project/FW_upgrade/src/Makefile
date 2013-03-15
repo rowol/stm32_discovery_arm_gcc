@@ -2,46 +2,47 @@
 # Put your stlink folder here so make burn will work.
 STLINK=~/stlink.git
 
-SRCS=main.c selftest.c stm32f4xx_it.c system_stm32f4xx.c usb_bsp.c usbd_desc.c usbd_usr.c
+SRCS=main.c command.c flash_if.c stm32f4xx_it.c system_stm32f4xx.c usb_bsp.c usbh_usr.c
 
 # Library modules
-SRCS += stm32f4xx_adc.c stm32f4xx_dac.c stm32f4xx_dma.c stm32f4xx_exti.c stm32f4xx_flash.c
-SRCS += stm32f4xx_gpio.c stm32f4xx_i2c.c stm32f4xx_rcc.c stm32f4xx_spi.c stm32f4xx_syscfg.c
-SRCS += stm32f4xx_tim.c misc.c
-SRCS += stm32f4_discovery.c stm32f4_discovery_audio_codec.c stm32f4_discovery_lis302dl.c
-SRCS += usbd_core.c usbd_hid_core.c usbd_ioreq.c usbd_req.c
-SRCS += usb_core.c usb_dcd.c usb_dcd_int.c
+SRCS += stm32f4xx_exti.c stm32f4xx_flash.c stm32f4xx_gpio.c stm32f4xx_rcc.c 
+SRCS += stm32f4xx_syscfg.c stm32f4xx_tim.c misc.c
+SRCS += stm32f4_discovery.c
+SRCS += usb_core.c usb_hcd.c usb_hcd_int.c
+SRCS += usbh_core.c usbh_hcs.c usbh_ioreq.c usbh_msc_bot.c usbh_msc_core.c 
+SRCS += usbh_msc_fatfs.c usbh_msc_scsi.c usbh_stdreq.c
+SRCS += fattime.c ff.c
 
 # Binaries will be generated with this name (.elf, .bin, .hex, etc)
-PROJ_NAME=demonstration
+PROJ_NAME=fw_upgrade
 
 #######################################################################################
 
-STM_COMMON=../..
+STM_COMMON=../../..
 
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 
-#CFLAGS  = -g -O2 -Wall -Tstm32_flash.ld 
-CFLAGS  = -g -O2 -Tstm32_flash.ld 
+CFLAGS  = -g -O2 -Wall -Tstm32_flash.ld 
 CFLAGS += -DUSE_STDPERIPH_DRIVER
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m4 -mthumb-interwork
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CFLAGS += -I.
+CFLAGS += -I../inc
 
 # Choose fullspeed or highseed (?)
 CFLAGS += -DUSE_OTG_FS_CORE -DUSE_USB_OTG_FS
 #CFLAGS += -DUSE_OTG_HS_CORE -DUSE_USB_OTG_HS
-# Choose fullspeed or highspeed (?)
+# Choose fullspeed or highseed (?)
 
 # Include files from STM libraries
+CFLAGS += -I$(STM_COMMON)/Utilities/STM32F4-Discovery
+CFLAGS += -I$(STM_COMMON)/Utilities/Third_Party/fat_fs/inc
 CFLAGS += -I$(STM_COMMON)/Libraries/CMSIS/Include 
 CFLAGS += -I$(STM_COMMON)/Libraries/CMSIS/ST/STM32F4xx/Include
 CFLAGS += -I$(STM_COMMON)/Libraries/STM32F4xx_StdPeriph_Driver/inc
+CFLAGS += -I$(STM_COMMON)/Libraries/STM32_USB_HOST_Library/Core/inc
+CFLAGS += -I$(STM_COMMON)/Libraries/STM32_USB_HOST_Library/Class/MSC/inc
 CFLAGS += -I$(STM_COMMON)/Libraries/STM32_USB_OTG_Driver/inc
-CFLAGS += -I$(STM_COMMON)/Libraries/STM32_USB_Device_Library/Core/inc
-CFLAGS += -I$(STM_COMMON)/Libraries/STM32_USB_Device_Library/Class/hid/inc
-CFLAGS += -I$(STM_COMMON)/Utilities/STM32F4-Discovery
 
 
 # add startup file to build
@@ -50,11 +51,11 @@ SRCS += $(STM_COMMON)/Libraries/CMSIS/ST/STM32F4xx/Source/Templates/TrueSTUDIO/s
 OBJS = $(SRCS:.c=.o)
 
 vpath %.c $(STM_COMMON)/Libraries/STM32F4xx_StdPeriph_Driver/src \
+          $(STM_COMMON)/Libraries/STM32_USB_OTG_Driver/src \
+          $(STM_COMMON)/Libraries/STM32_USB_HOST_Library/Core/src \
+          $(STM_COMMON)/Libraries/STM32_USB_HOST_Library/Class/MSC/src \
           $(STM_COMMON)/Utilities/STM32F4-Discovery \
-          $(STM_COMMON)/Libraries/STM32_USB_Device_Library/Core/src \
-          $(STM_COMMON)/Libraries/STM32_USB_Device_Library/Class/hid/src \
-          $(STM_COMMON)/Libraries/STM32_USB_OTG_Driver/src
-
+          $(STM_COMMON)/Utilities/Third_Party/fat_fs/src
 
 .PHONY: proj
 
