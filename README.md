@@ -1,12 +1,15 @@
 
-This repository contains source code for the article, [STM32 Discovery Development on Linux](http://www.wolinlabs.com/blog/linux.stm32.discovery.gcc.html)
+This repository contains source code for the articles
+* [STM32 Discovery Development on Linux](http://www.wolinlabs.com/blog/linux.stm32.discovery.gcc.html) 
+* [STM32F4 Discovery Virtual COM/Serial Port](http://www.wolinlabs.com/blog/stm32f4.virtual.com.port.html)
 
 
 Contents:
 
 1. LED blinker sample code (buildable)
-2. STM sample code (buildable)
-3. STM libraries and headers
+2. USB virtual serial port code (buildable)
+3. STM sample code (buildable)
+4. STM libraries and headers
 
 
 STM libraries, headers, and samples have been modified to work with GNU Tools for ARM Embedded Processors toolchain and STM32F4 Discovery EVB.   Generally this just involved adding Makefiles and a slightly modified version of the TrueStudio linker file.   In the Project directory, everything under Demonstration, FW\_upgrade, and Peripheral\_Examples is buildable from the command line by running 'make'
