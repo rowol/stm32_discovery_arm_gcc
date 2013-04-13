@@ -156,30 +156,6 @@ static uint16_t VCP_Ctrl(uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 
 
 
-/**
- * @brief  putchar
- *         Sends one char over the USB serial link.
- * @param  buf: char to be sent
- * @retval none
- */
-
-void VCP_put_char(uint8_t buf) {
-	VCP_DataTx(&buf, 1);
-}
-
-void VCP_send_str(uint8_t* buf) {
-	uint32_t i = 0;
-	while (*(buf + i)) {
-		i++;
-	}
-	VCP_DataTx(buf, i);
-}
-
-void VCP_send_buffer(uint8_t* buf, int len) {
-	VCP_DataTx(buf, len);
-}
-
-
 
 /**
  * @brief  VCP_DataTx
@@ -208,8 +184,7 @@ static uint16_t VCP_DataTx(uint8_t* Buf, uint32_t Len)
       if(APP_Rx_ptr_in == APP_RX_DATA_SIZE)
          APP_Rx_ptr_in = 0;
    }
-   //If we were passed a buffer, transmit that
-   else {   
+   else {      //If we were passed a buffer, transmit that
       while (i < Len) {
          APP_Rx_Buffer[APP_Rx_ptr_in] = *(Buf + i);
          APP_Rx_ptr_in++;
@@ -257,27 +232,15 @@ static uint16_t VCP_DataRx(uint8_t* Buf, uint32_t Len)
 
 
 
-/**
-  * @brief  DISCOVERY_COM_IRQHandler
-  *         
-  * @param  None.
-  * @retval None.
-  */
 void DISCOVERY_COM_IRQHandler(void)
 {
    GPIO_ToggleBits(LED_BLUE_GPIO_PORT, LED_BLUE_PIN);
 
-   //RSW - I don't think this is right, VCP_DataTx needs to be modified to read port...
    // Send the received data to the PC Host
    if (USART_GetITStatus(DISCOVERY_COM, USART_IT_RXNE) != RESET) 
-     VCP_DataTx (0,0);    //This copies RS232 data to USB
+     VCP_DataTx(0,0);    //Copies RS232 data to USB
 
    /* If overrun condition occurs, clear the ORE flag and recover communication */
    if (USART_GetFlagStatus(DISCOVERY_COM, USART_FLAG_ORE) != RESET)
       USART_ReceiveData(DISCOVERY_COM);
 }
-
-
-
-
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

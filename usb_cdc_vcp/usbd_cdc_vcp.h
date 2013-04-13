@@ -44,18 +44,5 @@ typedef struct
   uint8_t  datatype;
 } LINE_CODING;
 
-
-
-void VCP_put_char(uint8_t buf);
-void VCP_send_str(uint8_t* buf);
-int VCP_get_char(uint8_t *buf);
-int VCP_get_string(uint8_t *buf);
-void VCP_send_buffer(uint8_t* buf, int len);
-
-#define DEFAULT_CONFIG                  0
-#define OTHER_CONFIG                    1
-
-
 #endif /* __USBD_CDC_VCP_H */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
