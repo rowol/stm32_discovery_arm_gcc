@@ -62,12 +62,15 @@ OBJS = $(SRCS:.c=.o)
 
 ###################################################
 
-.PHONY: lib proj
+.PHONY: lib proj dir_tree
 
-all: proj
-	$(SIZE) $(OUTPATH)/$(PROJ_NAME).elf
+all:  dir_tree proj
+
+dir_tree:
+	mkdir -p $(OUTPATH)
 
 proj: $(OUTPATH)/$(PROJ_NAME).elf
+	$(SIZE) $(OUTPATH)/$(PROJ_NAME).elf
 
 $(OUTPATH)/$(PROJ_NAME).elf: $(SRCS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBPATHS) $(LIBS)
