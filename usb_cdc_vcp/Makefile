@@ -1,7 +1,8 @@
-#Modify BINPATH to point to where you installed the ARM cross compiler binaries
-STM_COMMON = ../STM32F4-Discovery_FW_V1.1.0
-BINPATH = ~/gnu.tools.for.ARM.Embedded.Processors/gcc-arm-none-eabi-4_7-2012q4/bin/
 
+# Put your stlink folder here so make burn will work.
+STLINK=~/stlink.git
+
+STM_COMMON = ../STM32F4-Discovery_FW_V1.1.0
 
 # Sources
 SRCS = main.c usart.c stm32f4xx_it.c system_stm32f4xx.c 
@@ -24,9 +25,9 @@ OUTPATH=build
 
 ###################################################
 
-CC=$(BINPATH)/arm-none-eabi-gcc
-OBJCOPY=$(BINPATH)/arm-none-eabi-objcopy
-SIZE=$(BINPATH)/arm-none-eabi-size
+CC=arm-none-eabi-gcc
+OBJCOPY=arm-none-eabi-objcopy
+SIZE=arm-none-eabi-size
 
 
 # Choose debug or release...
@@ -79,3 +80,7 @@ clean:
 	rm -f $(OUTPATH)/$(PROJ_NAME).elf
 	rm -f $(OUTPATH)/$(PROJ_NAME).hex
 	rm -f $(OUTPATH)/$(PROJ_NAME).bin
+
+# Flash the STM32F4
+burn: proj
+	$(STLINK)/st-flash write $(OUTPATH)/$(PROJ_NAME).bin 0x8000000
