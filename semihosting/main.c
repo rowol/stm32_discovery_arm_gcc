@@ -10,8 +10,15 @@ int main(void)
    setbuf(stdout, NULL);
 
    printf("Hello world\r\n");
+   printf("Press return to continue\r\n");
 
-   for (;;)
+   //Wait for a return key press in the OpenOCD/GDB server window
+   getchar();
+   
+   printf("Goodbye world\r\n");
+
+   
+   for (;;) 
       ;
    
    return 0;
